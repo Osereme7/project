@@ -1,0 +1,15 @@
+#An AWS ec-2Ubuntu Server 18.04 LTS (HVM) instance was spun up in an aws acount
+#opened port 22 to ssh into the instance from my command line
+#Also opened all ports so that the instance can be viewed from anywhere in the world 
+#configurations for ubuntu instance
+
+sudo apt update -y #to update instance
+sudo apt install docker.io -y #to install docker for containerization
+sudo hostname docker 
+sudo usermod -aG docker ubuntu #to add docker to the ubuntu user group
+sudo su - ubuntu
+git clone https://github.com/wagtail/wagtail
+docker build -t wagtail .
+docker login -u $REGISTRY_USER -p $REGISTRY_PASS &&
+docker ps -aq | xargs docker stop | xargs docker rm &&
+docker run -d -p 5000:8000 $IMAGE_NAME:$IMAGE_TAG"
