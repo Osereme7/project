@@ -1,0 +1,44 @@
+variables:
+  IMAGE_NAME: osereme7/ehealth4e
+  IMAGE_TAG: python-app-1.0
+
+stages:
+  - test
+  - build
+  - deploy
+
+run_tests:
+  stage: test
+  image: python:3.6-bullseye
+  before_script:
+  - pip3 install virtualenv
+  - virtualenv venv
+  - source venv/bin/activate
+  - pip3 install requests
+  - pip3 install python-dotenv
+  
+  script:
+      - make test
+build_image:
+  stage: build
+  image: docker:20.10.16
+  services:
+    - docker:20.10.16-dind
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    - docker login -u $REGISTRY_USER -p $REGISTRY_PASS
+  script:
+    - docker build -t $IMAGE_NAME:$IMAGE_TAG 
+    - docker push $IMAGE_NAME:$IMAGE_TAG
+
+
+deploy:
+  stage: deploy
+  before_script:
+    - chmod 400 $SSH_KEY
+  script:
+    ssh -i "SSH_KEY" ubuntu@ip-3.91.148.47"
+        docker login -u $REGISTRY_USER -p $REGISTRY_PASS &&
+        docker ps -aq | xargs docker stop | xargs docker rm &&
+        docker run -d -p 5000:8000 $IMAGE_NAME:$IMAGE_TAG"
