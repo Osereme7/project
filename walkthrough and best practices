@@ -1,0 +1,10 @@
+Created gitlab account and cloned the repository after I forked it on my github account
+Had to authenticate with my github account
+Watched a gitlab video to familiarize myself with the GUI and for further knowledge of gitlab
+Created a gitlab-ci.yml to and added it to the repository, the gitlab-ci.yml to test, build in docker and deploy to a docker container
+https://gitlab.com/Osereme7/wagtail/-/blob/main/.gitlab-ci.yml
+Created a repository on dockerhub to push the image to, I also had to authenticate with docker in the file
+For that I had to pass masked environmental variables (for my docker login crendentials so its not visible in the code)
+I also passed script level variables in order to avoid hard coding
+uploaded my instance ssh key as a file variable in my gitlab ci script and changed permissions to 400 for security
+I ran wagtails image on port 5000 instead of 80 for additional security
