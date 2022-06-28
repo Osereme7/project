@@ -1,0 +1,24 @@
+sudo apt get update
+sudo apt get install nginx -y
+sudo ufw enable
+nginx -v
+sudo ufw apt list
+sudo ufw allow 'Nginx Full' #to enable http, https and ssh traffic
+sudo ufw status
+sudo systemctl status nginx
+scp -r <ip address>: container port
+cd /etc/nginx
+cd var/www/html 
+mkdir site1 and site2
+vi sites-available/
+<server{
+listen 80 default_server;
+listen [::]default_server;
+root <ip address>;
+index ...;
+server_name ...;
+location /{
+try_files $url $url/= 404;
+}}>
+sudo ln -s /etc/nginx/sites-available /etc/nginx/sites-enabled
+sudo systemctl restart nginx
