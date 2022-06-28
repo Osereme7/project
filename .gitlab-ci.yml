@@ -6,19 +6,25 @@ stages:
   - test
   - build
   - deploy
-
-run_tests:
+# Check python code style.
+flake8:
+  image: python:3.6
   stage: test
-  image: python:3.6-bullseye
-  before_script:
-  - pip3 install virtualenv
-  - virtualenv venv
-  - source venv/bin/activate
-  - pip3 install requests
-  - pip3 install python-dotenv
-  
   script:
-      - make test
+    # Remember to update a version in requirements-dev.txt
+    - pip install flake8==3.7.7
+    - flake8 rca
+
+# Check imports sort order, i.e. check whether they are in an alphabetical
+# order and grouped properly.
+isort:
+  image: python:3.6
+  stage: test
+  before_script:
+    # Remember to update a version in requirements-dev.txt
+    - pip install isort==4.3.15
+  script:
+    - isort --check-only --diff --recursive rca
 build_image:
   stage: build
   image: docker:20.10.16
