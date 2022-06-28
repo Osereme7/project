@@ -38,7 +38,7 @@ deploy:
   before_script:
     - chmod 400 $SSH_KEY
   script:
-    ssh -i "SSH_KEY" ubuntu@ip-3.91.148.47"
+    ssh -i "SSH_KEY" ubuntu@ip18.207.222.61
         docker login -u $REGISTRY_USER -p $REGISTRY_PASS &&
         docker ps -aq | xargs docker stop | xargs docker rm &&
         docker run -d -p 5000:8000 $IMAGE_NAME:$IMAGE_TAG"
