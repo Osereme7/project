@@ -10,3 +10,6 @@ uploaded my instance ssh key as a file variable in my gitlab ci script and chang
 I ran wagtails image on port 5000 instead of 80 for additional security
 Configured a gitlab runner and Created an IAM role in aws to allow the gitlab runner perform Jobs in my aws instance
 Created masked variables for my access keys and secret access keys to avoid hard coding and to prevent security breaches
+configured 2 aws ec2 t2.micro instances 
+1 for the deployment of the image in the docker container and an inginx server to serve the web page of my container on the same instance
+2 a nagios server to scrape the logs from the aws instances to for continuous monitoring
