@@ -8,3 +8,5 @@ For that I had to pass masked environmental variables (for my docker login crend
 I also passed script level variables in order to avoid hard coding
 uploaded my instance ssh key as a file variable in my gitlab ci script and changed permissions to 400 for security
 I ran wagtails image on port 5000 instead of 80 for additional security
+Configured a gitlab runner and Created an IAM role in aws to allow the gitlab runner perform Jobs in my aws instance
+Created masked variables for my access keys and secret access keys to avoid hard coding and to prevent security breaches
