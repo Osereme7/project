@@ -1,11 +1,12 @@
 variables:
   IMAGE_NAME: osereme7/ehealth4e
-  IMAGE_TAG: python-app-1.0
+  IMAGE_TAG: devops
 
 stages:
   - test
   - build
   - deploy
+
 # Check python code style.
 flake8:
   image: python:3.6
@@ -25,6 +26,7 @@ isort:
     - pip install isort==4.3.15
   script:
     - isort --check-only --diff --recursive rca
+
 build_image:
   stage: build
   image: docker:20.10.16
@@ -35,15 +37,19 @@ build_image:
   before_script:
     - docker login -u $REGISTRY_USER -p $REGISTRY_PASS
   script:
-    - docker build -t $IMAGE_NAME:$IMAGE_TAG 
+    - docker build -t $IMAGE_NAME:$IMAGE_TAG .
     - docker push $IMAGE_NAME:$IMAGE_TAG
-
 
 deploy:
   stage: deploy
-  script:
-    ssh -o "StrictHostKeyChecking=no" -i "aws_key.pem.pem" ubuntu@ec2-18-207-222-61.compute-1.amazonaws.com" " 
-        docker login -u $REGISTRY_USER -p $REGISTRY_PASS &&
-        docker ps -aq | xargs docker stop | xargs docker rm &&
-        docker run -d -p 6000:8000 $IMAGE_NAME:$IMAGE_TAG"
+  image: python:3.6
 
+  before_script:
+  - mkdir -p ~/.ssh
+  - echo -e "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+  - chmod 700 ~/.ssh/id_rsa
+  
+  script:
+  -  ssh -o StrictHostKeyChecking=no -i "$SSH_PRIVATE_KEY" $SSH_USER@$EC2_IPADDRESS "
+          docker login -u $REGISTRY_USER -p $REGISTRY_PASS && 
+          docker run -d -p 6000:8000 $IMAGE_NAME:$IMAGE_TAG"
