@@ -41,10 +41,9 @@ build_image:
 
 deploy:
   stage: deploy
-  before_script:
-    - chmod 400 $SSH_KEY
   script:
-    ssh -i "SSH_KEY" ubuntu@ip18.207.222.61
+    ssh -o "StrictHostKeyChecking=no" -i "aws_key.pem.pem" ubuntu@ec2-18-207-222-61.compute-1.amazonaws.com" " 
         docker login -u $REGISTRY_USER -p $REGISTRY_PASS &&
         docker ps -aq | xargs docker stop | xargs docker rm &&
-        docker run -d -p 5000:8000 $IMAGE_NAME:$IMAGE_TAG"
+        docker run -d -p 6000:8000 $IMAGE_NAME:$IMAGE_TAG"
+
