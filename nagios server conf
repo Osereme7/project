@@ -1,4 +1,4 @@
---- STEPS FOR  installing Nagios in Amazon Linux-----
+--- STEPS FOR  installing Nagios in Amazon Linux not ubuntu-----
 
 yum install httpd php
 yum install gcc glibc glibc-common
