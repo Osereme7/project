@@ -33,3 +33,4 @@ RUN python manage.py collectstatic --noinput --clear
 
 
 CMD set -xe; python manage.py migrate --noinput; gunicorn {{ project_name }}.wsgi:application
+
