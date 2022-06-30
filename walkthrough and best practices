@@ -15,3 +15,4 @@ configured 2 aws ec2 t2.micro instances
 2 a nagios server to scrape the logs from the aws instances to for continuous monitoring
 
 The containerized application can be found on this url  http://18.207.222.61:5000/
+
