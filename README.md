@@ -1,2 +1,1 @@
-# project
-This is a project for a company
+Deploying python wagtail application in a docker container with gitlab
